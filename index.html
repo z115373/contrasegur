@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
-    <script>
-        function Disdisable(){
-        document.getElementById("button").disabled = false;
-        }
-    </script>
+    <script src="js/contrasegur.js"></script>
     <head>
         <title>Contrasenyes Segures</title>
         <meta charset="UTF-8">
@@ -18,7 +8,7 @@ and open the template in the editor.
     <img src="img/icono-centre.jpeg" alt="" style="width:150px;height:150px;"/>
     <body>
         <br><a>Usuari o correu:</a>
-        <input type="text" id="usuari"><br>
+        <input type="text" id="usuari" placeholder="z999999"><br>
         <a>Contrasenya:</a>
         <input type="password" id="contrasenya" onchange="Disdisable()"><br>
         <br><input type="checkbox" id="carac" disabled="">
@@ -34,7 +24,7 @@ and open the template in the editor.
         <br><div>Dèbil - Regular - Bona - Forta</div>
         &nbsp;&nbsp;&nbsp;&nbsp;<progress id="nivell" value="0" max="100"></progress>
         <div>Weak - So-so - Great! - Strong</div><br>
-        <button id="button" type="button" disabled="">Iniciar sessió</button>
+        <button onclick="Evaluacion()" id="button" type="button" disabled="">Iniciar sessió</button>
     
     </body>
 </html>
