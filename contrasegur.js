@@ -1,4 +1,3 @@
-
 var base = 0;
 var carac = false;
 var nume = false;
@@ -13,7 +12,6 @@ function Disdisable() {
     document.getElementById("maju").checked = false;
     document.getElementById("minus").checked = false;
     document.getElementById("button").disabled = false;
-    window.alert(password);
     if (password.length >= 8) {
         document.getElementById("carac").checked = true;
         carac = true;
@@ -54,14 +52,27 @@ function Disdisable() {
         base = base + 40;
     }
     nivell = base ^ password.length / 16;
-    window.alert(nivell);
     document.getElementById("nivell").value = nivell.toString();
+}
+
+function Recomanacio() {
+    if (minus == false || nume == false || maju == false) {
+        return"-Tendria que tenir almenys una lletra majuscula, una minuscula, i un numero";
+    }
+    if (carac == false) {
+        return"-Tendria que tenir almenys 8 caracters";
+    }
+    if (espe == false) {
+        return"-Tendria que tenir almenys un caracter especial";
+    }
+    if (carac == true || espe == true || minus == true || nume == true || maju == true) {
+        return"-Contrasenya Robusta!";
+    }
 }
 
 function Evaluacion() {
     dificultat = 0;
     password = document.getElementById("contrasenya").value;
-    window.alert(base + " " + password.length);
     CostComputacional = Math.pow(base, password.length) / 10e6;
     if (CostComputacional < 10e3) {
         dificultat = 0;
@@ -80,12 +91,16 @@ function Evaluacion() {
             }
         }
     }
+    result = zxcvbn(document.getElementById("contrasenya").value);
     AnyProcessament = CostComputacional / (365 * 24 * 60 * 60);
     DiesProcessament = CostComputacional / (24 * 60 * 60);
-    window.alert(password +
-            "-Tendria un cost computacional per força bruta de: " +
-            CostComputacional.toExponential() +
-            " pel que una maquina de 1 MIPS podria arrribar a necesitar " +
-            AnyProcessament.toExponential() + " anys de processament, es a dir," +
-            DiesProcessament.toExponential() + " dies.");
+    window.alert("Contrasenya: " + password + " \n\
+    " + Recomanacio() + "\n\
+    " + "-Tendria un cost computacional per força bruta de: " +
+    CostComputacional.toExponential() +
+    " pel que una maquina de 1 MIPS podria arrribar a necesitar " +
+    AnyProcessament.toExponential() + " anys de processament, es a dir," +
+    DiesProcessament.toExponential() + " dies." + " \n\
+    " + "-Tendria un nivell de robustesa de: " + dificultat + "/4 i un zxcvbn score de: " +
+    result.score + "/4");
 }
