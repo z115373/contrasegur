@@ -26,6 +26,12 @@
         &nbsp;&nbsp;&nbsp;&nbsp;<progress id="nivell" value="0" max="100"></progress>
         <div>Weak - So-so - Great! - Strong</div><br>
         <button onclick="Evaluacion()" id="button" type="button" disabled="">Iniciar sessió</button>
-    
+        <!--<button onclick="Comunes()" id="b" type="button">Prueba</button>-->
+        <br><br><input type="file" id="contrasenas" />
+        <br><br><input type="file" id="patrons" />
+        <script type="text/javascript">
+            document.getElementById("contrasenas").addEventListener("change", readSingleFile, false);
+            document.getElementById("patrons").addEventListener("change", readSingleFile, false);
+        </script>
     </body>
 </html>
