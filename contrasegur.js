@@ -11,38 +11,44 @@ function readSingleFile(evt) {
     var f = evt.target.files[0];
     if (f) {
         var r = new FileReader();
-        r.onload = function(e) {
+        r.onload = function (e) {
             var contents = e.target.result;
             alert("Got the file.\n"
-                + "name: " + f.name + "\n"
-                + "type: " + f.type + "\n"
-                + "size: " + f.size + " bytes\n"
-                + "starts with: " + contents.substr(0, contents.indexOf("\n"))
-            );
-    if(contents.substr(0, 1)==="/"){
-        streamf1=contents.replaceAll("\r\n", ",");
-        streamf2=streamf1.replaceAll("/", "");
-        streamf3=streamf1.split(",");
-        for (i = 0; i < streamf2.length; i++) {
-            patron[i]=new RegExp(streamf3[i]);
-        }
-    }else{
-        comunes=contents.replaceAll("\r\n", ",");
-    }
+                    + "name: " + f.name + "\n"
+                    + "type: " + f.type + "\n"
+                    + "size: " + f.size + " bytes\n"
+                    + "starts with: " + contents.substr(0, contents.indexOf("\n"))
+                    );
+            if (contents.substr(0, 1) === "/") {
+                streamf1 = contents.replaceAll("\r\n", ",");
+                streamf2 = streamf1.replaceAll("/", "");
+                streamf3 = streamf1.split(",");
+                for (i = 0; i < streamf2.length; i++) {
+                    patron[i] = new RegExp(streamf3[i]);
+                }
+            } else {
+                comunes = contents.replaceAll("\r\n", ",");
+            }
         };
         r.readAsText(f);
     } else {
         alert("Failed to load file");
     }
 }
+function Show_password() {
+    var x = document.getElementById("contrasenya");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}
 function Comunes() {
     contrasena = document.getElementById("contrasenya").value;
     if (comunes.includes(contrasena)) {
         return"-Massa comuna";
-        window.alert("-Massa comuna");
     }
     if (patron.some(pat => pat.test(contrasena))) {
-        window.alert("-Te patrons comuns");
         return"-Te patrons comuns";
     }
 }
@@ -120,6 +126,7 @@ function Recomanacio() {
 function Evaluacion() {
     dificultat = 0;
     password = document.getElementById("contrasenya").value;
+    user = document.getElementById("usuari").value;
     CostComputacional = Math.pow(base, password.length) / 10e6;
     if (CostComputacional < 10e3) {
         dificultat = 0;
@@ -151,9 +158,11 @@ function Evaluacion() {
             DiesProcessament.toExponential() + " dies." + " \n\
     " + "-Tendria un nivell de robustesa de: " + dificultat + "/4 i un zxcvbn score de: " +
             result.score + "/4");
-    var cookie= window.confirm("Quieres que guardemos tu usuario y contraseña");
-    if (cookie===true) {
-    localStorage.setItem("contrasena", password);
-    window.alert(localStorage.getItem("contrasena"));
-} 
+    var obrir = window.confirm("Quieres que guardemos tu usuario y contraseña");
+    if (obrir === true) {
+        localStorage.setItem("contrasena", password);
+        localStorage.setItem("usuario", user);
+        const myWindow = window.open("novaPes.html", "_blank", "width=460, height=600, left=0, \n\
+    top=0, location=0, menubar=0, resizable=0, scrollbars=0, status=0, titlebar=0, toolbar=0");
+    }
 }
