@@ -9,9 +9,11 @@
     <img src="img/icono-centre.jpeg" alt="" style="width:150px;height:150px;"/>
     <body>
         <br><a>Usuari o correu:</a>
-        <input type="text" id="usuari" placeholder="z999999"><br>
+        <input type="text" id="usuari" value="z999999"><br>
         <a>Contrasenya:</a>
-        <input type="password" id="contrasenya" onchange="Disdisable()"><br>
+        <input type="password" id="contrasenya" onchange="Disdisable()">
+        <a>Mostrar Contrasenya:</a>
+        <input type="checkbox" onclick="Show_password()"><br>
         <br><input type="checkbox" id="carac" disabled="">
         <a> Minim 8 caracters</a><br>
         <input type="checkbox" id="maju" disabled="">
