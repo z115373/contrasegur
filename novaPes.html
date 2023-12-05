@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript">
+            
+            function Guardarcontrasenya() {
+                document.getElementById("contrasenia").value = localStorage.getItem("contrasena");
+                document.getElementById("usuaris").value = localStorage.getItem("usuario");
+            }
+            function Desar() {
+                document.cookie = document.getElementById("usuaris").value + "="
+                        + document.getElementById("contrasenia").value + ";" + ";path=/";
+            }
+            function Prueba() {
+                document.cookie = document.getElementById("usuaris").value + "= ; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                var decodedCookie = decodeURIComponent(document.cookie);
+                alert(decodedCookie);
+            }
+            function Show_password() {
+                var x = document.getElementById("contrasenia");
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
+            }
+        </script>
+    </head>
+    <body onload="Guardarcontrasenya()">
+        <p>Vols desà l'inici de sessió a contrasegur.netlify.app?</p>
+        <a>Usuari o correu:</a>
+        <input type="text" id="usuaris" disabled=""><br>
+        <a>Contrasenya:</a>
+        <input type="password" id="contrasenia" disabled="">
+        <a>Mostrar Contrasenya:</a>
+        <input type="checkbox" onclick="Show_password()"><br>
+        <button onclick="Desar()" id="button" type="button">Desa</button>
+        <button onclick="" id="buton" type="button">No Desa</button><br>
+        <button onclick="Prueba()" id="b" type="button">Prueba</button>
+    </body>
+</html>
