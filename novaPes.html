@@ -1,3 +1,9 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 <html>
 
     <head>
@@ -11,8 +17,31 @@
                 document.getElementById("usuaris").value = localStorage.getItem("usuario");
             }
             function Desar() {
-                document.cookie = document.getElementById("usuaris").value + "="
-                        + document.getElementById("contrasenia").value + ";" + ";path=/";
+                if (document.cookie !== document.getElementById("contrasenia").value) {
+                    obrer = window.confirm("¿Quieres que cambiemos tu usuario y contraseña?");
+                } else {
+                    document.cookie = document.getElementById("usuaris").value + "="
+                            + document.getElementById("contrasenia").value + ";" + ";path=/";
+                }
+                if (obrer === true) {
+                    document.cookie = document.getElementById("usuaris").value + "="
+                            + document.getElementById("contrasenia").value + ";" + ";path=/";
+                }
+            }
+            function getCookie(cname) {
+                let name = cname + "=";
+                let decodedCookie = decodeURIComponent(document.cookie);
+                let ca = decodedCookie.split(';');
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
             }
             function Borrar() {
                 document.cookie = document.getElementById("usuaris").value + "= ; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -21,13 +50,20 @@
             }
             function Prueba() {
                 const mywindow = window.open("", "_blank", "width=460, height=600, left=0, \n\
-    top=0, location=0, menubar=0, resizable=0, scrollbars=0, status=0, titlebar=0, toolbar=0");
+                                             top=0, location=0, menubar=0, resizable=0, scrollbars=0, status=0, titlebar=0, toolbar=0");
                 mywindow.document.open();
-                mywindow.document.write = ("<html><body><table border='1' style='border-collapse:collapse'>\n\
-              <tr><th>Inici de sesió</th><th>Contrasenya</th></tr>");
-                mywindow.document.write =("</table></body></html>");
+                mywindow.document.write("<html><body><table border='1' style='border-collapse:collapse'>\n\
+                                           <tr><th>Inici de sesió</th><th>Contrasenya</th></tr>");
+                let decodedCookie = decodeURIComponent(document.cookie);
+                let ca = decodedCookie.split(';');
+
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i].split('=');
+                    mywindow.document.write("<tr><td>" + c[0] + "</td><td>" + c[1] + "</td></tr>");
+                }
+                mywindow.document.write("</table></body></html>");
                 mywindow.document.close();
-    }
+            }
             function Show_password() {
                 var x = document.getElementById("contrasenia");
                 if (x.type === "password") {
@@ -41,13 +77,14 @@
     <body onload="Guardarcontrasenya()">
         <p>Vols desà l'inici de sessió a contrasegur.netlify.app?</p>
         <a>Usuari o correu:</a>
-        <input type="text" id="usuaris" disabled=""><br>
+        <input type="text" id="usuaris"><br>
         <a>Contrasenya:</a>
-        <input type="password" id="contrasenia" disabled="">
+        <input type="password" id="contrasenia">
         <a>Mostrar Contrasenya:</a>
         <input type="checkbox" onclick="Show_password()"><br>
         <button onclick="Desar()" id="button" type="button">Desa</button>
         <button onclick="window.close()" id="buton" type="button">No Desa</button><br>
+        <button onclick="Borrar()" id="boton" type="button">Eliminar</button>
         <button onclick="Prueba()" id="b" type="button">Prueba</button>
     </body>
 </html>
