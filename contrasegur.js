@@ -158,7 +158,7 @@ function Evaluacion() {
             DiesProcessament.toExponential() + " dies." + " \n\
     " + "-Tendria un nivell de robustesa de: " + dificultat + "/4 i un zxcvbn score de: " +
             result.score + "/4");
-    var obrir = window.confirm("Quieres que guardemos tu usuario y contraseña");
+    var obrir = window.confirm("¿Quieres que guardemos tu usuario y contraseña?");
     if (obrir === true) {
         localStorage.setItem("contrasena", password);
         localStorage.setItem("usuario", user);
