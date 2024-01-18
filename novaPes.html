@@ -11,27 +11,56 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script type="text/javascript">
-
+            //Aquesta funció dona el valor de la contrasenya posada per els usuaris als imputs
             function Guardarcontrasenya() {
                 document.getElementById("contrasenia").value = localStorage.getItem("contrasena");
                 document.getElementById("usuaris").value = localStorage.getItem("usuario");
             }
-            function Desar(){
-                if(document.cookie!==document.getElementById("contrasenia").value){
-                     obrer = window.confirm("¿Quieres que cambiemos tu usuario y contraseña?");
-                }else{
+            //Aquesta funció guarda la contrasenya i l'usuari dins la cookie i detecta si 
+            //estam sobrescrivint la contrasenya d'un usuari ja existent i ens pregunta si 
+            //volem canivarla avans de sobrescruire la cookie
+            function Desar() {
+                cookieMap= new Map();
+                let name = document.getElementById("usuaris").value;
+                let decodedCookie = decodeURIComponent(document.cookie);
+                let ca = decodedCookie.split(';');
+                for (let i = 0; i < ca.length; i++) {
+                    //let c = ca[i];
+                    cookieMap.set(ca[i].split("=")[0], ca[i].split("=")[1]);
+                    alert(ca[i].split("=")[0] + "=" + name);
+                    alert(ca[i].split("=")[0] == name);
+                }
+               
+                if (cookieMap.has(name)) { 
+                    alert("trobat");
+                    if (cookieMap.get(document.getElementById("usuaris").value)!== 
+                                      document.getElementById("contrasenia").value) {
+                        obrer = window.confirm("¿Quieres que cambiemos tu usuario y contraseña?");
+                        //trobat = true;
+                        if (obrer === true) {
+                            // alert("Acepta el canvi");
+                            document.cookie = document.getElementById("usuaris").value + "="
+                                    + document.getElementById("contrasenia").value + ";" + ";path=/";
+                            alert(document.cookie);
+                        }
+                    }
+                } else {
+                    alert("No existeix usuari");
                     document.cookie = document.getElementById("usuaris").value + "="
                         + document.getElementById("contrasenia").value + ";" + ";path=/";
+                    alert(document.cookie);
                 }
-               if(obrer===true){
-                   document.cookie = document.getElementById("usuaris").value + "="
-                        + document.getElementById("contrasenia").value + ";" + ";path=/";
-               }
+                
+                //if (!trobat) {
+                    // alert("No existeix usuari");
+                    //document.cookie = document.getElementById("usuaris").value + "="
+                            //+ document.getElementById("contrasenia").value + ";" + ";path=/";
+               // }
+
             }
             function Borrar() {
                 document.cookie = document.getElementById("usuaris").value + "= ; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 var decodedCookie = decodeURIComponent(document.cookie);
-                alert(decodedCookie);
             }
             function Prueba() {
                 const mywindow = window.open("", "_blank", "width=460, height=600, left=0, \n\
@@ -41,35 +70,33 @@ and open the template in the editor.
                                            <tr><th>Inici de sesió</th><th>Contrasenya</th></tr>");
                 let decodedCookie = decodeURIComponent(document.cookie);
                 let ca = decodedCookie.split(';');
-                
-                for(let i = 0; i <ca.length; i++) {
-                  let c = ca[i].split('=');
-                  mywindow.document.write("<tr><td>"+c[0]+"</td><td>"+c[1]+"</td></tr>");
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i].split('=');
+                    mywindow.document.write("<tr><td>" + c[0] + "</td><td>" + c[1] + "</td></tr>");
                 }
                 mywindow.document.write("</table></body></html>");
                 mywindow.document.close();
+            }
+            function Show_password() {
+                var x = document.getElementById("contrasenia");
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
                 }
-                function Show_password() {
-                    var x = document.getElementById("contrasenia");
-                    if (x.type === "password") {
-                        x.type = "text";
-                    } else {
-                        x.type = "password";
-                    }
-                }
+            }
         </script>
     </head>
     <body onload="Guardarcontrasenya()">
         <p>Vols desà l'inici de sessió a contrasegur.netlify.app?</p>
         <a>Usuari o correu:</a>
-        <input type="text" id="usuaris"><br>
+        <input type="text" id="usuaris">
+        <button onclick="Borrar()" id="boton" type="button">Eliminar</button><br>
         <a>Contrasenya:</a>
         <input type="password" id="contrasenia">
-        <a>Mostrar Contrasenya:</a>
-        <input type="checkbox" onclick="Show_password()"><br>
+        <a>Mostrar:</a><input type="checkbox" onclick="Show_password()"><br>       
         <button onclick="Desar()" id="button" type="button">Desa</button>
-        <button onclick="window.close()" id="buton" type="button">No Desa</button><br>
-        <button onclick="Borrar()" id="boton" type="button">Eliminar</button>
-        <button onclick="Prueba()" id="b" type="button">Prueba</button>
+        <button onclick="window.close()" id="buton" type="button">No Desa</button>       
+        <button onclick="Prueba()" id="b" type="button">Mostrar els inicis de sessió guardats</button>
     </body>
 </html>
