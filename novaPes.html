@@ -12,44 +12,56 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script type="text/javascript">
             //Aquesta funció dona el valor de la contrasenya posada per els usuaris als imputs
-            function Guardarcontrasenya() {
+            function Inici() {
                 document.getElementById("contrasenia").value = localStorage.getItem("contrasena");
                 document.getElementById("usuaris").value = localStorage.getItem("usuario");
-            }
-            //Aquesta funció guarda la contrasenya i l'usuari dins la cookie i detecta si 
-            //estam sobrescrivint la contrasenya d'un usuari ja existent i ens pregunta si 
-            //volem canivarla avans de sobrescruire la cookie
-            function Desar() {
+                
                 cookieMap= new Map();
-                let name = document.getElementById("usuaris").value;
                 let decodedCookie = decodeURIComponent(document.cookie);
                 let ca = decodedCookie.split(';');
                 for (let i = 0; i < ca.length; i++) {
                     //let c = ca[i];
                     cookieMap.set(ca[i].split("=")[0], ca[i].split("=")[1]);
+                    //alert(ca[i].split("=")[0] + "=" + name);
+                    //alert(ca[i].split("=")[0] == name);
+                }
+                
+            }
+            //Aquesta funció guarda la contrasenya i l'usuari dins la cookie i detecta si 
+            //estam sobrescrivint la contrasenya d'un usuari ja existent i ens pregunta si 
+            //volem canivarla avans de sobrescruire la cookie
+            function Desar() {
+                let name = document.getElementById("usuaris").value; 
+                /*
+                cookieMap= new Map();
+                let decodedCookie = decodeURIComponent(document.cookie);
+                let ca = decodedCookie.split(';');
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    cookieMap.set(ca[i].split("=")[0], ca[i].split("=")[1]);
                     alert(ca[i].split("=")[0] + "=" + name);
                     alert(ca[i].split("=")[0] == name);
                 }
-               
-                if (cookieMap.has(name)) { 
-                    alert("trobat");
-                    if (cookieMap.get(document.getElementById("usuaris").value)!== 
-                                      document.getElementById("contrasenia").value) {
-                        obrer = window.confirm("¿Quieres que cambiemos tu usuario y contraseña?");
+                */
+                //if (cookieMap.has(name)) { 
+                    //alert("trobat");
+                    if (cookieMap.get(name)!== document.getElementById("contrasenia").value) {
+                        obrer = window.confirm("¿Quieres que guardemos este usuario y contraseña?");
                         //trobat = true;
                         if (obrer === true) {
                             // alert("Acepta el canvi");
                             document.cookie = document.getElementById("usuaris").value + "="
                                     + document.getElementById("contrasenia").value + ";" + ";path=/";
                             alert(document.cookie);
+                            cookieMap.set(name, document.getElementById("contrasenia").value);
                         }
-                    }
-                } else {
+                    }/*else {
                     alert("No existeix usuari");
                     document.cookie = document.getElementById("usuaris").value + "="
                         + document.getElementById("contrasenia").value + ";" + ";path=/";
-                    alert(document.cookie);
-                }
+                    
+                }*/
+                //} 
                 
                 //if (!trobat) {
                     // alert("No existeix usuari");
@@ -59,21 +71,25 @@ and open the template in the editor.
 
             }
             function Borrar() {
+                cookieMap.delete(document.getElementById("usuaris").value);
                 document.cookie = document.getElementById("usuaris").value + "= ; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 var decodedCookie = decodeURIComponent(document.cookie);
             }
-            function Prueba() {
+            function NovaPestanya() {
                 const mywindow = window.open("", "_blank", "width=460, height=600, left=0, \n\
                                              top=0, location=0, menubar=0, resizable=0, scrollbars=0, status=0, titlebar=0, toolbar=0");
                 mywindow.document.open();
                 mywindow.document.write("<html><body><table border='1' style='border-collapse:collapse'>\n\
                                            <tr><th>Inici de sesió</th><th>Contrasenya</th></tr>");
-                let decodedCookie = decodeURIComponent(document.cookie);
+                /*let decodedCookie = decodeURIComponent(document.cookie);
                 let ca = decodedCookie.split(';');
                 for (let i = 0; i < ca.length; i++) {
                     let c = ca[i].split('=');
                     mywindow.document.write("<tr><td>" + c[0] + "</td><td>" + c[1] + "</td></tr>");
-                }
+                }*/
+                cookieMap.forEach(function(value, key) {
+                    mywindow.document.write("<tr><td>" + key + "</td><td>" + value + "</td></tr>");
+                })
                 mywindow.document.write("</table></body></html>");
                 mywindow.document.close();
             }
@@ -87,7 +103,7 @@ and open the template in the editor.
             }
         </script>
     </head>
-    <body onload="Guardarcontrasenya()">
+    <body onload="Inici()">
         <p>Vols desà l'inici de sessió a contrasegur.netlify.app?</p>
         <a>Usuari o correu:</a>
         <input type="text" id="usuaris">
@@ -97,6 +113,6 @@ and open the template in the editor.
         <a>Mostrar:</a><input type="checkbox" onclick="Show_password()"><br>       
         <button onclick="Desar()" id="button" type="button">Desa</button>
         <button onclick="window.close()" id="buton" type="button">No Desa</button>       
-        <button onclick="Prueba()" id="b" type="button">Mostrar els inicis de sessió guardats</button>
+        <button onclick="NovaPestanya()" id="b" type="button">Mostrar els inicis de sessió guardats</button>
     </body>
 </html>

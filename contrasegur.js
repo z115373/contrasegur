@@ -4,7 +4,7 @@ var nume = false;
 var espe = false;
 var maju = false;
 var minus = false;
-var comunes = ["123456", "12345678", "123456789", "qwerty", "contraseña"];
+var comunes = new Set(["123456", "12345678", "123456789", "qwerty", "contraseña"]);
 var patron = [/123/, /abc/, /qwerty/];
 
 function readSingleFile(evt) {
@@ -27,7 +27,12 @@ function readSingleFile(evt) {
                     patron[i] = new RegExp(streamf3[i]);
                 }
             } else {
-                comunes = contents.replaceAll("\r\n", ",");
+                alert(comunes);
+                comunesSp = contents.split("\r\n");
+                for (i = 0; i < comunesSp.length; i++) {
+                    comunes.add(comunesSp[i]);
+                }
+                alert(comunes);
             }
         };
         r.readAsText(f);
@@ -43,16 +48,20 @@ function Show_password() {
         x.type = "password";
     }
 }
+//Comprovam si la contrasenya te patrons o es comuna
 function Comunes() {
+    //feim servir aquesta funció per evitar un erro quan es fasi l'analisi de contraseña
     contrasena = document.getElementById("contrasenya").value;
-    if (comunes.includes(contrasena)) {
+    if (comunes.has(contrasena)) {
         return"-Massa comuna";
     }
     if (patron.some(pat => pat.test(contrasena))) {
         return"-Te patrons comuns";
     }
+    return "";
 }
-function Disdisable() {
+//Amb aquesta funció fem possible uasr el botó d'inici de sesió i marca els checkbox que necesitem marcar
+function Activar() {
     var password = document.getElementById("contrasenya").value;
     carac = false;
     nume = false;
