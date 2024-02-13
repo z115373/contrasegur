@@ -46,7 +46,7 @@ and open the template in the editor.
                 //if (cookieMap.has(name)) { 
                     //alert("trobat");
                     if (cookieMap.get(name)!== document.getElementById("contrasenia").value) {
-                        obrer = window.confirm("¿Quieres que guardemos este usuario y contraseña?");
+                        obrer = window.confirm("Vol dessar la contrasenya?");
                         //trobat = true;
                         if (obrer === true) {
                             // alert("Acepta el canvi");
@@ -54,6 +54,7 @@ and open the template in the editor.
                                     + document.getElementById("contrasenia").value + ";" + ";path=/";
                             alert(document.cookie);
                             cookieMap.set(name, document.getElementById("contrasenia").value);
+                            alert("Inici de sessió guardat!");
                         }
                     }/*else {
                     alert("No existeix usuari");
@@ -74,6 +75,7 @@ and open the template in the editor.
                 cookieMap.delete(document.getElementById("usuaris").value);
                 document.cookie = document.getElementById("usuaris").value + "= ; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 var decodedCookie = decodeURIComponent(document.cookie);
+                alert("Inici de sessió esborrat!");
             }
             function NovaPestanya() {
                 const mywindow = window.open("", "_blank", "width=460, height=600, left=0, \n\
@@ -104,15 +106,15 @@ and open the template in the editor.
         </script>
     </head>
     <body onload="Inici()">
-        <p>Vols desà l'inici de sessió a contrasegur.netlify.app?</p>
-        <a>Usuari o correu:</a>
+        <p>Vols desar l'inici de sessió a ContraSegur</p>
+        <a>Usuari o correu: </a>
         <input type="text" id="usuaris">
         <button onclick="Borrar()" id="boton" type="button">Eliminar</button><br>
-        <a>Contrasenya:</a>
+        <a>Contrasenya: </a>
         <input type="password" id="contrasenia">
-        <a>Mostrar:</a><input type="checkbox" onclick="Show_password()"><br>       
-        <button onclick="Desar()" id="button" type="button">Desa</button>
-        <button onclick="window.close()" id="buton" type="button">No Desa</button>       
-        <button onclick="NovaPestanya()" id="b" type="button">Mostrar els inicis de sessió guardats</button>
+        <a>Mostrar: </a><input type="checkbox" onclick="Show_password()"><br>       
+        <button onclick="Desar()" id="button" type="button">Desar</button>
+        <button onclick="window.close()" id="buton" type="button">No desar</button>       
+        <button onclick="NovaPestanya()" id="b" type="button">Mostrar els inicis de sessió desats</button>
     </body>
 </html>
