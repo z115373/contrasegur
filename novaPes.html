@@ -11,6 +11,49 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script type="text/javascript">
+            const Idiomes_dft = [
+                {
+                    "IdIdioma": "ca",
+                    "Titol": "Vols desar l'inici de sessió a ContraSegur?",
+                    "Username": "Usuari o correu: ",
+                    "Password": "Contrasenya: ",
+                    "Mostrar": "Mostrar: ",
+                    "Guardat": "Inici de sessió guardat!",
+                    "Canviar": "Vol dessar la contrasenya?",
+                    "Esborrat": "Inici de sessió esborrat!",
+                    "Inicis": "Mostrar els inicis de sessió desats",
+                    "Desar": "Desar",
+                    "Nodesar": "No desar",
+		    "Eliminar": "Eliminar"
+                },
+                {
+                    "IdIdioma": "es",
+                    "Titol": "¿Quieres guardar el inicio de sesión en ContraSegur? ",
+                    "Username": "Usuario o correo: ",
+                    "Password": "Contraseña: ",
+                    "Mostrar": "Mostrar: ",
+                    "Guardat": "¡Inicio de sesión guardado! ",
+                    "Canviar": "¿Quiere cambiar la contraseña? ",
+                    "Esborrat": "¡Inicio de sesión borrado! ",
+                    "Inicis": "Mostrar los inicios de sesión guardados ",
+                    "Desar": "Guardar ",
+                    "Nodesar": "No guardar",
+                    "Eliminar": "Eliminar"
+                },
+                {
+                    "IdIdioma": "en",
+                    "Titol": "Do you want to save your login at ContraSegur? ",
+                    "Username": "User or email: ",
+                    "Password": "Password: ",
+                    "Mostrar": "Show: ",
+                    "Guardat": "Login saved! ",
+                    "Canviar": "Do you want to change your password? ",
+                    "Esborrat": "Login deleted! ",
+                    "Inicis": "Show saved logins ",
+                    "Desar": "Save ",
+                    "Nodesar": "Don't save",
+		    "Eliminar": "Delete"
+                }];
             //Aquesta funció dona el valor de la contrasenya posada per els usuaris als imputs
             function Inici() {
                 document.getElementById("contrasenia").value = localStorage.getItem("contrasena");
