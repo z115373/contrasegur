@@ -236,7 +236,7 @@ function traduccio(IdIdioma, res){
   //alert(idioma.IdIdioma);
 }
 
-function sql_diccionariUpdate(IdIdioma, res){
+function sql_diccionariUpdate(res){
     const mywindow = window.open("", "_blank", "width=460, height=600, left=0, \n\
         top=0, location=0, menubar=0, resizable=0, scrollbars=0, status=0, titlebar=0, toolbar=0");
         mywindow.document.open();
@@ -252,25 +252,8 @@ function sql_diccionariUpdate(IdIdioma, res){
         mywindow.document.close();
 }
 
-/*function sql_diccionariInsert(IdIdioma, res){
-    const mywindow = window.open("", "_blank", "width=460, height=600, left=0, \n\
-        top=0, location=0, menubar=0, resizable=0, scrollbars=0, status=0, titlebar=0, toolbar=0");
-        mywindow.document.open();
-        mywindow.document.write("<html><body>");
-        mywindow.document.write('<a target="_blank" href="https://sqlitesudio.netlify.app/">' + "SQL UPDATE TblDiccionari for SQLite Sudio IdIdioma=" + '"'+ idioma.IdIdioma +'"' + "</a>");
-        for (var i in res){
-            mywindow.document.write("<p><div>" + "UPDATE TblContrasenyes" + "</div>");
-            mywindow.document.write("<div>" + "SET MD5 = " + '"' + MD5(res[i].Contrasenyes) + '"' + "," + "</div>");
-            mywindow.document.write("<div>" + "SHA1 = " + '"' + SHA1(res[i].Contrasenyes) + '"' + "</div>");
-            mywindow.document.write("<div>" + "WHERE Contrasenyes =" + '"' + res[i].Contrasenyes + '"' + ";" + "</div></p>");
-        }
-        mywindow.document.write("</body></html>");
-        mywindow.document.close();
-    for (i = 0; i < comunes.length; i++) {
-        if(diccionario.has(comunes[i])){
-           diccionario.delete(comunes[i]);
-        }
-    }*/
+function sql_diccionariInsert(IdIdioma){
+    
     const mywindow = window.open("", "_blank", "width=460, height=600, left=0, \n\
         top=0, location=0, menubar=0, resizable=0, scrollbars=0, status=0, titlebar=0, toolbar=0");
         mywindow.document.open();
@@ -324,11 +307,14 @@ function Evaluacion() {
     result = zxcvbn(document.getElementById("contrasenya").value);
     AnyProcessament = CostComputacional / (365 * 24 * 60 * 60);
     DiesProcessament = CostComputacional / (24 * 60 * 60);
-    window.alert("Password: " + password + " \n\ " + Comunes() + "\n\ " +
-    Recomanacio() +  idioma.Computacional+ CostComputacional.toExponential()
-    + idioma.Maquina + AnyProcessament.toExponential() + idioma.Processament +
-    DiesProcessament.toExponential() + idioma.Nivell + dificultat + idioma.Score
-    + result.score + "/4");
+    
+    window.alert("Password: " + document.getElementById("contrasenya").value + " \n\ " + 
+    // Comunes() + "\n\ " +
+     Recomanacio() +  idioma.Computacional+ CostComputacional.toExponential() + 
+     idioma.Maquina + AnyProcessament.toExponential() + idioma.Processament +
+     DiesProcessament.toExponential() + idioma.Nivell + dificultat + idioma.Score + 
+    result.score + "/4");
+    
     var obrir = window.confirm(idioma.Voldesar);
     if (obrir === true) {
         localStorage.setItem("contrasena", password);
