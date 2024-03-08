@@ -92,6 +92,7 @@ var minus = false;
 var comunes = ["123456", "12345678", "123456789", "qwerty", "contraseña"];
 var patron = [/123/, /abc/, /qwerty/];
 var diccionario=new Set([]);
+
 function readSingleFile(evt) {
     var f = evt.target.files[0];
     if (f) {
@@ -139,7 +140,7 @@ function Show_password() {
 //Comprovam si la contrasenya te patrons o es comuna
 function Comunes() {
     contrasena = document.getElementById("contrasenya").value;
-    if (comunes.has(contrasena)) {
+    if (comunes.includes(contrasena)) {
         return idioma.Massacomu;
     }
     if (patron.some(pat => pat.test(contrasena))) {
@@ -161,7 +162,7 @@ function Activar() {
     document.getElementById("espe").checked = false;
     document.getElementById("maju").checked = false;
     document.getElementById("minus").checked = false;
-    document.getElementById("button").disabled = false;
+    document.getElementById("Inisessio").disabled = false;
     if (password.length >= 8) {
         document.getElementById("carac").checked = true;
         carac = true;
@@ -234,6 +235,16 @@ function traduccio(IdIdioma, res){
  //alert(idiomas[0].Titol); 
  idioma = idiomas.find(idioma => idioma.IdIdioma === IdIdioma);
   //alert(idioma.IdIdioma);
+ document.getElementById("Username").innerHTML = idioma.Username;
+ document.getElementById("Password").innerHTML = idioma.Password;
+ document.getElementById("Mostrar").innerHTML = idioma.Mostrar;
+ document.getElementById("Minimcar").innerHTML = idioma.Minimcar;
+ document.getElementById("Majuscula").innerHTML = idioma.Majuscula;
+ document.getElementById("Minuscula").innerHTML = idioma.Minuscula;
+ document.getElementById("Numero").innerHTML = idioma.Numero;
+ document.getElementById("Carespecial").innerHTML = idioma.Carespecial;
+ document.getElementById("Robustesa").innerHTML = idioma.Robustesa;
+ document.getElementById("Inisessio").innerHTML = idioma.Inisessio;
 }
 
 function sql_diccionariUpdate(res){
@@ -309,16 +320,17 @@ function Evaluacion() {
     DiesProcessament = CostComputacional / (24 * 60 * 60);
     
     window.alert("Password: " + document.getElementById("contrasenya").value + " \n\ " + 
-    // Comunes() + "\n\ " +
+     Comunes() + "\n\ " +
      Recomanacio() +  idioma.Computacional+ CostComputacional.toExponential() + 
      idioma.Maquina + AnyProcessament.toExponential() + idioma.Processament +
      DiesProcessament.toExponential() + idioma.Nivell + dificultat + idioma.Score + 
-    result.score + "/4");
+     result.score + "/4");
     
     var obrir = window.confirm(idioma.Voldesar);
     if (obrir === true) {
         localStorage.setItem("contrasena", password);
         localStorage.setItem("usuario", user);
+        localStorage.setItem("idioma", idioma.IdIdioma);
         const myWindow = window.open("novaPes.html", "_blank", "width=460, height=600, left=0, \n\
     top=0, location=0, menubar=0, resizable=0, scrollbars=0, status=0, titlebar=0, toolbar=0");
     }
