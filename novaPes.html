@@ -54,11 +54,30 @@ and open the template in the editor.
                     "Nodesar": "Don't save",
 		    "Eliminar": "Delete"
                 }];
+            var idiomas = Idiomes_dft;
+            var idioma = idiomas.find(idioma => idioma.IdIdioma === localStorage.getItem("idioma"));
             //Aquesta funció dona el valor de la contrasenya posada per els usuaris als imputs
             function Inici() {
                 document.getElementById("contrasenia").value = localStorage.getItem("contrasena");
                 document.getElementById("usuaris").value = localStorage.getItem("usuario");
-                
+                //idioma.IdIdioma = localStorage.getItem("idioma");
+                alert(idioma.IdIdioma);
+                document.getElementById("Username").innerHTML = idioma.Username;
+                alert(idioma.Username);
+                document.getElementById("Password").innerHTML = idioma.Password;
+                alert(idioma.Password);
+                document.getElementById("Mostrar").innerHTML = idioma.Mostrar;
+                alert(idioma.Mostrar);
+                document.getElementById("Titol").innerHTML = idioma.Titol;
+                alert(idioma.Titol);
+                document.getElementById("Inicis").innerHTML = idioma.Inicis;
+                alert(idioma.Inicis);
+                document.getElementById("Desar").innerHTML = idioma.Desar;
+                alert(idioma.Desar);
+                document.getElementById("Nodesar").innerHTML = idioma.Nodesar;
+                alert(idioma.Nodesar);
+                document.getElementById("Eliminar").innerHTML = idioma.Eliminar;
+                alert(idioma.Eliminar);
                 cookieMap= new Map();
                 let decodedCookie = decodeURIComponent(document.cookie);
                 let ca = decodedCookie.split(';');
@@ -89,7 +108,7 @@ and open the template in the editor.
                 //if (cookieMap.has(name)) { 
                     //alert("trobat");
                     if (cookieMap.get(name)!== document.getElementById("contrasenia").value) {
-                        obrer = window.confirm("Vol dessar la contrasenya?");
+                        obrer = window.confirm(idioma.Canviar);
                         //trobat = true;
                         if (obrer === true) {
                             // alert("Acepta el canvi");
@@ -97,7 +116,7 @@ and open the template in the editor.
                                     + document.getElementById("contrasenia").value + ";" + ";path=/";
                             alert(document.cookie);
                             cookieMap.set(name, document.getElementById("contrasenia").value);
-                            alert("Inici de sessió guardat!");
+                            alert(idioma.Esborrat);
                         }
                     }/*else {
                     alert("No existeix usuari");
@@ -118,7 +137,7 @@ and open the template in the editor.
                 cookieMap.delete(document.getElementById("usuaris").value);
                 document.cookie = document.getElementById("usuaris").value + "= ; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 var decodedCookie = decodeURIComponent(document.cookie);
-                alert("Inici de sessió esborrat!");
+                alert(idioma.Esborrat);
             }
             function NovaPestanya() {
                 const mywindow = window.open("", "_blank", "width=460, height=600, left=0, \n\
@@ -134,7 +153,7 @@ and open the template in the editor.
                 }*/
                 cookieMap.forEach(function(value, key) {
                     mywindow.document.write("<tr><td>" + key + "</td><td>" + value + "</td></tr>");
-                })
+                });
                 mywindow.document.write("</table></body></html>");
                 mywindow.document.close();
             }
@@ -149,15 +168,15 @@ and open the template in the editor.
         </script>
     </head>
     <body onload="Inici()">
-        <p>Vols desar l'inici de sessió a ContraSegur</p>
-        <a>Usuari o correu: </a>
+        <p id="Titol">Vols desar l'inici de sessió a ContraSegur</p>
+        <a id="Username">Usuari o correu: </a>
         <input type="text" id="usuaris">
-        <button onclick="Borrar()" id="boton" type="button">Eliminar</button><br>
-        <a>Contrasenya: </a>
+        <button onclick="Borrar()" id="Eliminar" type="button">Eliminar</button><br>
+        <a id="Password">Contrasenya: </a>
         <input type="password" id="contrasenia">
-        <a>Mostrar: </a><input type="checkbox" onclick="Show_password()"><br>       
-        <button onclick="Desar()" id="button" type="button">Desar</button>
-        <button onclick="window.close()" id="buton" type="button">No desar</button>       
-        <button onclick="NovaPestanya()" id="b" type="button">Mostrar els inicis de sessió desats</button>
+        <a id="Mostrar">Mostrar: </a><input type="checkbox" onclick="Show_password()"><br>       
+        <button onclick="Desar()" id="Desar" type="button">Desar</button>
+        <button onclick="window.close()" id="Nodesar" type="button">No desar</button>       
+        <button onclick="NovaPestanya()" id="Inicis" type="button">Mostrar els inicis de sessió desats</button>
     </body>
 </html>

@@ -22,27 +22,28 @@ and open the template in the editor.
             <option value="en">en</option>
         </select>
         <img src="img/icono-centre.jpeg" alt="" style="width:150px;height:150px;"/>
-        <br><a>Usuari o correu:</a>
+        <br><a id="Username">Usuari o correu:</a>
         <input type="text" id="usuari" value="z999999"><br>
-        <a>Contrasenya:</a>
+        <a id="Password">Contrasenya:</a>
         <input type="password" id="contrasenya" onchange="Activar()">
-        <a>Mostrar Contrasenya:</a>
+        <a id="Mostrar">Mostrar Contrasenya:</a>
         <input type="checkbox" onclick="Show_password()"><br>
         <br><input type="checkbox" id="carac" disabled="">
-        <a> Minim 8 caracters</a><br>
+        <a id="Minimcar"> Minim 8 caracters</a><br>
         <input type="checkbox" id="maju" disabled="">
-        <a> almenys una lletra majúscula</a><br>
+        <a id="Majuscula"> almenys una lletra majúscula</a><br>
         <input type="checkbox" id="minus" disabled="">
-        <a> almenys una lletra minúscula</a><br>
+        <a id="Minuscula"> almenys una lletra minúscula</a><br>
         <input type="checkbox" id="nume" disabled="">
-        <a> almenys un número</a><br>
+        <a id="Numero"> almenys un número</a><br>
         <input type="checkbox" id="espe" disabled="">
-        <a> almenys un carácter especial</a><br>
-        <br><div>Dèbil - Regular - Bona - Forta</div>
+        <a id="Carespecial"> almenys un carácter especial</a><br>
+        <br><div id="Robustesa">Dèbil - Regular - Bona - Forta</div>
         &nbsp;&nbsp;&nbsp;&nbsp;<progress id="nivell" value="0" max="100"></progress>
-        <div>Weak - So-so - Great! - Strong</div><br>
-        <button onclick="Evaluacion()" id="button" type="button" disabled="">Iniciar sessió</button>
-        <button onclick="Comunes()" id="b" type="button">Prueba</button>
+        <div>Weak - Fair - Good - Strong</div><br>
+        <button onclick="Evaluacion()" id="Inisessio" type="button" disabled="">Iniciar sessió</button>
+        <!--<button onclick="Comunes()" id="b" type="button">Prueba</button>-->
+        <a href="https://z115373.wordpress.com/2024/03/08/fitxa-tecnica-contrasegur/">fitxa tecnica</a>
         <br><br><input type="file" id="contrasenas" />
         <br><br><input type="file" id="patrons" />
         <script type="text/javascript">
