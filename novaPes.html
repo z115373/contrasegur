@@ -33,7 +33,7 @@ and open the template in the editor.
                     "Password": "Contraseña: ",
                     "Mostrar": "Mostrar: ",
                     "Guardat": "¡Inicio de sesión guardado! ",
-                    "Canviar": "¿Quiere cambiar la contraseña? ",
+                    "Canviar": "¿Quiere guardar la contraseña? ",
                     "Esborrat": "¡Inicio de sesión borrado! ",
                     "Inicis": "Mostrar los inicios de sesión guardados ",
                     "Desar": "Guardar ",
@@ -47,7 +47,7 @@ and open the template in the editor.
                     "Password": "Password: ",
                     "Mostrar": "Show: ",
                     "Guardat": "Login saved! ",
-                    "Canviar": "Do you want to change your password? ",
+                    "Canviar": "Do you want to save your password? ",
                     "Esborrat": "Login deleted! ",
                     "Inicis": "Show saved logins ",
                     "Desar": "Save ",
@@ -114,9 +114,9 @@ and open the template in the editor.
                             // alert("Acepta el canvi");
                             document.cookie = document.getElementById("usuaris").value + "="
                                     + document.getElementById("contrasenia").value + ";" + ";path=/";
-                            alert(document.cookie);
+                            //alert(document.cookie);
                             cookieMap.set(name, document.getElementById("contrasenia").value);
-                            alert(idioma.Esborrat);
+                            alert(idioma.Guardat);
                         }
                     }/*else {
                     alert("No existeix usuari");
