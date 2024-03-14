@@ -113,13 +113,13 @@ function readSingleFile(evt) {
                     patron[i] = new RegExp(streamf3[i]);
                 }
             } else {
-                alert(diccionario);
+                //alert(diccionario);
                 diccionarioSp = contents.split("\r\n");
                 diccionarioSp2 = contents.split("\n");
                 for (i = 0; i < diccionarioSp2.length; i++) {
                     diccionario.add(diccionarioSp2[i]);
                 }
-                alert(diccionario);
+                //alert(diccionario);
             }
         };
         r.readAsText(f);
@@ -140,7 +140,7 @@ function Show_password() {
 //Comprovam si la contrasenya te patrons o es comuna
 function Comunes() {
     contrasena = document.getElementById("contrasenya").value;
-    if (comunes.includes(contrasena)) {
+    if (diccionario.has(contrasena)) {
         return idioma.Massacomu;
     }
     if (patron.some(pat => pat.test(contrasena))) {
@@ -247,18 +247,26 @@ function traduccio(IdIdioma, res){
  document.getElementById("Inisessio").innerHTML = idioma.Inisessio;
 }
 
-function sql_diccionariUpdate(res){
+function sql_diccionariUpdate(IdIdioma, res){
     const mywindow = window.open("", "_blank", "width=460, height=600, left=0, \n\
         top=0, location=0, menubar=0, resizable=0, scrollbars=0, status=0, titlebar=0, toolbar=0");
         mywindow.document.open();
         mywindow.document.write("<html><body>");
-        mywindow.document.write('<a target="_blank" href="https://sqlitesudio.netlify.app/">' + "SQL UPDATE TblDiccionari for SQLite Sudio IdIdioma=" + '"'+ idioma.IdIdioma +'"' + "</a>");
+        mywindow.document.write('<a target="_blank" href="https://sqlitesudio.netlify.app/">' + "SQL UPDATE TblDiccionari for SQLite Sudio IdIdioma=" + '"'+ IdIdioma +'"' + "</a>");
         for (var i in res){
+           //alert(res[i].Contrasenyes);         
             mywindow.document.write("<p><div>" + "UPDATE TblContrasenyes" + "</div>");
             mywindow.document.write("<div>" + "SET MD5 = " + '"' + MD5(res[i].Contrasenyes) + '"' + "," + "</div>");
             mywindow.document.write("<div>" + "SHA1 = " + '"' + SHA1(res[i].Contrasenyes) + '"' + "</div>");
-            mywindow.document.write("<div>" + "WHERE Contrasenyes =" + '"' + res[i].Contrasenyes + '"' + ";" + "</div></p>");
+            mywindow.document.write("<div>" + "WHERE Contrasenyes =" + '"' + res[i].Contrasenyes + '"' + ";" + "</div></p>");        
         }
+        diccionario.forEach(function(password){
+            //diccionario.add(password);
+            mywindow.document.write("<p><div>" + "UPDATE TblContrasenyes" + "</div>");
+            mywindow.document.write("<div>" + "SET MD5 = " + '"' + MD5(password) + '"' + "," + "</div>");
+            mywindow.document.write("<div>" + "SHA1 = " + '"' + SHA1(password) + '"' + "</div>");
+            mywindow.document.write("<div>" + "WHERE Contrasenyes =" + '"' + password + '"' + ";" + "</div></p>");        
+        });
         mywindow.document.write("</body></html>");
         mywindow.document.close();
 }
@@ -280,20 +288,34 @@ function sql_diccionariInsert(IdIdioma){
         mywindow.document.close();
 }
 
+function Update(IdIdioma){
+    alasql('ATTACH SQLITE DATABASE Contrasegur("Contrasegur.db"); USE Contrasegur; \n\
+          SELECT Contrasenyes, IdIdioma FROM TblContrasenyes WHERE IdIdioma IS NULL OR IdIdioma="" OR IdIdioma="'+ IdIdioma +'";', 
+      [], function(res) { sql_diccionariUpdate(IdIdioma, res.pop());});
+}
+
+function Insert(IdIdioma){
+    alasql('ATTACH SQLITE DATABASE Contrasegur("Contrasegur.db"); USE Contrasegur; \n\
+                SELECT Contrasenyes, IdIdioma FROM TblContrasenyes WHERE IdIdioma IS NULL OR IdIdioma="" OR IdIdioma="'+ IdIdioma +'";', 
+            [], function() { sql_diccionariInsert(IdIdioma);});
+}
+
 function CanviarIdiomas(IdIdioma){    
         config = {
           locateFile: filename => `/dist/${filename}`
         };
         alasql('ATTACH SQLITE DATABASE Contrasegur("Contrasegur.db"); USE Contrasegur; \n\
                 SELECT * FROM TblTextosGUI;', 
-            [], function(res) { traduccio(IdIdioma, res.pop());});
-        alasql('ATTACH SQLITE DATABASE Contrasegur("Contrasegur.db"); USE Contrasegur; \n\
-                SELECT Contrasenyes, IdIdioma FROM TblContrasenyes WHERE IdIdioma IS NULL OR IdIdioma="" OR IdIdioma="'+ IdIdioma +'";', 
-            [], function() { sql_diccionariInsert(IdIdioma);});
+            [], function(res) { traduccio(IdIdioma, res.pop());});   
 }
 
 function Evaluacion() {
-
+    base = 0;
+    carac = false;
+    nume = false;
+    espe = false;
+    maju = false;
+    minus = false;
     dificultat = 0;
     password = document.getElementById("contrasenya").value;
     user = document.getElementById("usuari").value;
