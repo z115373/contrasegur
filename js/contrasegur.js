@@ -24,7 +24,9 @@ const Idiomes_dft = [
         "Processament": " anys de processament, es a dir, ",
         "Nivell": " dies.\n\     - Tendria un Nivell de Robustesa de: ",
         "Score": "/4, i un zxcvbn Score de: ",
-        "Voldesar": "Vol desar l'inici de sessió?"
+        "Voldesar": "Vol desar l'inici de sessió?",
+        "Patron": "Patrons:",
+        "Comun": "Diccionari:"
     },
     {
         "IdIdioma": "es",
@@ -51,7 +53,9 @@ const Idiomes_dft = [
         "Processament": "años de procesamiento, es decir, ",
         "Nivell": "días.\n\     - Tendría un Nivel de Robustez de: ",
         "Score": "/4, y un zxcvbn Score de: ",
-        "Voldesar": "¿Quiere guardar el inicio de sesión?"
+        "Voldesar": "¿Quiere guardar el inicio de sesión?",
+        "Patron": "Patrones:",
+        "Comun": "Diccionario:"
     },
     {
         "IdIdioma": "en",
@@ -78,7 +82,9 @@ const Idiomes_dft = [
         "Processament": "years of processing, that is, ",
         "Nivell": "days.\n\     - It would have a Robustness Level of: ",
         "Score": "/4, and a zxcvbn Score of: ",
-        "Voldesar": "Do you want to save your login?"
+        "Voldesar": "Do you want to save your login?",
+        "Patron": "Paterns:",
+        "Comun": "Dictionary:"
     }];
 var idiomas = Idiomes_dft;
 var idioma = idiomas.find(idioma => idioma.IdIdioma === "ca");
@@ -91,7 +97,7 @@ var maju = false;
 var minus = false;
 var comunes = ["123456", "12345678", "123456789", "qwerty", "contraseña"];
 var patron = [/123/, /abc/, /qwerty/];
-var diccionario=new Set([]);
+var diccionario=new Set(["123456", "12345678", "123456789", "qwerty", "contraseña"]);
 
 function readSingleFile(evt) {
     var f = evt.target.files[0];
@@ -218,7 +224,8 @@ function Recomanacio() {
     }
     if (carac === true && espe === true && minus === true && nume === true && maju === true) {
         return idioma.Contrarob;
-    }
+    } 
+    return "";
 }
 
 function printdata(res){
@@ -245,6 +252,8 @@ function traduccio(IdIdioma, res){
  document.getElementById("Carespecial").innerHTML = idioma.Carespecial;
  document.getElementById("Robustesa").innerHTML = idioma.Robustesa;
  document.getElementById("Inisessio").innerHTML = idioma.Inisessio;
+ document.getElementById("Comun").innerHTML = idioma.Comun;
+ document.getElementById("Patron").innerHTML = idioma.Patron;
 }
 
 function sql_diccionariUpdate(IdIdioma, res){
@@ -281,7 +290,7 @@ function sql_diccionariInsert(IdIdioma){
         diccionario.forEach(function(password){
             //diccionario.add(password);
             mywindow.document.write("<p>" + "INSERT INTO TblContrasenyes (Contrasenyes, IdIdioma, MD5, SHA1)\n\
-            VALUES(" + '"' + password + '",' + '"' + IdIdioma+ '",'
+            VALUES(" + '"' + password + '",' + '"' + idioma.IdIdioma+ '",'
             + '"' + MD5(password) + '",' + '"' + SHA1(password) + '");' + "</p>");
         });
         mywindow.document.write("</body></html>");
@@ -310,12 +319,6 @@ function CanviarIdiomas(IdIdioma){
 }
 
 function Evaluacion() {
-    base = 0;
-    carac = false;
-    nume = false;
-    espe = false;
-    maju = false;
-    minus = false;
     dificultat = 0;
     password = document.getElementById("contrasenya").value;
     user = document.getElementById("usuari").value;
@@ -340,7 +343,6 @@ function Evaluacion() {
     result = zxcvbn(document.getElementById("contrasenya").value);
     AnyProcessament = CostComputacional / (365 * 24 * 60 * 60);
     DiesProcessament = CostComputacional / (24 * 60 * 60);
-    
     window.alert("Password: " + document.getElementById("contrasenya").value + " \n\ " + 
      Comunes() + "\n\ " +
      Recomanacio() +  idioma.Computacional+ CostComputacional.toExponential() + 
