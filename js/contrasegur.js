@@ -261,7 +261,7 @@ function sql_diccionariUpdate(IdIdioma, res){
         top=0, location=0, menubar=0, resizable=0, scrollbars=0, status=0, titlebar=0, toolbar=0");
         mywindow.document.open();
         mywindow.document.write("<html><body>");
-        mywindow.document.write('<a target="_blank" href="https://sqlitesudio.netlify.app/">' + "SQL UPDATE TblDiccionari for SQLite Sudio IdIdioma=" + '"'+ IdIdioma +'"' + "</a>");
+        mywindow.document.write('<a target="_blank" href="https://sqlitesudio.netlify.app/">' + "SQL UPDATE TblDiccionari for SQLite Sudio IdIdioma=" + '"'+ idioma.IdIdioma +'"' + "</a>");
         for (var i in res){
            //alert(res[i].Contrasenyes);         
             mywindow.document.write("<p><div>" + "UPDATE TblContrasenyes" + "</div>");
@@ -298,15 +298,21 @@ function sql_diccionariInsert(IdIdioma){
 }
 
 function Update(IdIdioma){
-    alasql('ATTACH SQLITE DATABASE Contrasegur("Contrasegur.db"); USE Contrasegur; \n\
+    config = {
+          locateFile: filename => `/dist/${filename}`
+        };
+        alasql('ATTACH SQLITE DATABASE Contrasegur("Contrasegur.db"); USE Contrasegur; \n\
           SELECT Contrasenyes, IdIdioma FROM TblContrasenyes WHERE IdIdioma IS NULL OR IdIdioma="" OR IdIdioma="'+ IdIdioma +'";', 
       [], function(res) { sql_diccionariUpdate(IdIdioma, res.pop());});
 }
 
 function Insert(IdIdioma){
-    alasql('ATTACH SQLITE DATABASE Contrasegur("Contrasegur.db"); USE Contrasegur; \n\
-                SELECT Contrasenyes, IdIdioma FROM TblContrasenyes WHERE IdIdioma IS NULL OR IdIdioma="" OR IdIdioma="'+ IdIdioma +'";', 
-            [], function() { sql_diccionariInsert(IdIdioma);});
+    config = {
+          locateFile: filename => `/dist/${filename}`
+        }; 
+        alasql('ATTACH SQLITE DATABASE Contrasegur("Contrasegur.db"); USE Contrasegur; \n\
+          SELECT Contrasenyes, IdIdioma FROM TblContrasenyes WHERE IdIdioma IS NULL OR IdIdioma="" OR IdIdioma="'+ IdIdioma +'";', 
+      [], function(res) { sql_diccionariInsert(IdIdioma, res.pop());});
 }
 
 function CanviarIdiomas(IdIdioma){    
